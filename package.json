@@ -1,0 +1,15 @@
+{
+  "name": "sort-api-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Sango Mabhuti Yapi",
+  "license": "ISC",
+  "description": "A simple serverless API that accepts a string, sorts its characters alphabetically, and returns them as an array.",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
