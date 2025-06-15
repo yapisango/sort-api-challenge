@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sort API Challenge</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sort Characters API</h1>
+
+  <input type="text" id="inputText" placeholder="Enter a word" />
+  <button onclick="sendData()">Sort</button>
+
+  <p><strong>Sorted:</strong> <span id="output"></span></p>
+
+  <script>
+    function sendData() {
+      const input = document.getElementById('inputText').value;
+
+      fetch('/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: input })
+      })
+      .then(res => res.json())
+      .then(result => {
+        if (result.word) {
+          document.getElementById('output').textContent = result.word;
+        } else {
+          document.getElementById('output').textContent = 'Error: ' + result.error;
+        }
+      })
+      .catch(err => {
+        document.getElementById('output').textContent = 'Error connecting to server';
+        console.error(err);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
