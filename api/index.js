@@ -12,14 +12,19 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../../public')));
-app.post('/api/validate', validateHandler);
 
+// Serve static files from public/
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Serve HTML UI at root
 app.get('/', (req, res) => {
-  res.send('Backend is running 🚀');
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+// Bonus validation endpoint
+app.post('/api/validate', validateHandler);
 
+// Sort endpoint
 app.post('/', (req, res) => {
   const { data } = req.body;
 
