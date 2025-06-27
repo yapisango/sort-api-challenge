@@ -14,6 +14,13 @@
       padding: 0.5rem;
       margin-right: 0.5rem;
     }
+    hr {
+      margin: 2rem 0;
+    }
+    .output, .result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -23,7 +30,19 @@
   <input type="text" id="inputText" placeholder="Enter a word" />
   <button onclick="sendData()">Sort</button>
 
-  <p><strong>Sorted:</strong> <span id="output"></span></p>
+  <p class="output"><strong>Sorted:</strong> <span id="output"></span></p>
+
+  <hr>
+
+  <h2>Bonus Task: Validate Email and URL</h2>
+
+  <form id="bonusForm">
+    <input type="email" id="email" placeholder="Enter email" required />
+    <input type="url" id="url" placeholder="Enter URL" required />
+    <button type="submit">Validate</button>
+  </form>
+
+  <p class="result"><strong>Result:</strong> <span id="bonusOutput"></span></p>
 
   <script>
     function sendData() {
@@ -49,8 +68,33 @@
         console.error(err);
       });
     }
+
+    document.getElementById('bonusForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const url = document.getElementById('url').value;
+
+      try {
+        const res = await fetch('/api/validate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, url })
+        });
+        const data = await res.json();
+
+        if (data.message) {
+          document.getElementById('bonusOutput').textContent = 'Validation successful: ' + data.message;
+        } else {
+          document.getElementById('bonusOutput').textContent =
+            '❌ ' + data.error + ' (' + JSON.stringify(data.details) + ')';
+        }
+      } catch (err) {
+        document.getElementById('bonusOutput').textContent = 'Server error.';
+      }
+    });
   </script>
 
 </body>
 </html>
+
 
